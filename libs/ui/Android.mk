@@ -41,6 +41,7 @@ endif
 # Executed only on QCOM BSPs
 ifeq ($(TARGET_USES_QCOM_BSP),true)
     LOCAL_CFLAGS += -DQCOM_BSP
+endif
 
 ifeq ($(TARGET_SOC),exynos4210)
     LOCAL_CFLAGS += -DSAMSUNG_EXYNOS4210

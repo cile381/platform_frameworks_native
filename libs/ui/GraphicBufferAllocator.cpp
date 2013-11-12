@@ -153,11 +153,9 @@ status_t GraphicBufferAllocator::alloc(uint32_t w, uint32_t h,
         rec.size = h * stride[0] * bpp;
         list.add(*handle, rec);
     }
+        return err;
+}
 
-    return err;
-}
-    return err;
-}
 
 status_t GraphicBufferAllocator::free(buffer_handle_t handle)
 {
