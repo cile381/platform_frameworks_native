@@ -37,12 +37,6 @@ ifneq ($(BOARD_FRAMEBUFFER_FORCE_FORMAT),)
 LOCAL_CFLAGS += -DFRAMEBUFFER_FORCE_FORMAT=$(BOARD_FRAMEBUFFER_FORCE_FORMAT)
 endif
 
-
-# Executed only on QCOM BSPs
-ifeq ($(TARGET_USES_QCOM_BSP),true)
-    LOCAL_CFLAGS += -DQCOM_BSP
-endif
-
 ifeq ($(TARGET_SOC),exynos4210)
     LOCAL_CFLAGS += -DSAMSUNG_EXYNOS4210
 endif
@@ -60,6 +54,15 @@ LOCAL_CFLAGS += -DSAMSUNG_HDMI_SUPPORT
 LOCAL_SHARED_LIBRARIES += libhdmiclient
 LOCAL_C_INCLUDES += hardware/samsung/$(TARGET_BOARD_PLATFORM)/libhdmi/libhdmiservice
 LOCAL_C_INCLUDES += hardware/samsung/$(TARGET_BOARD_PLATFORM)/include
+endif
+
+# Executed only on QCOM BSPs
+ifeq ($(TARGET_USES_QCOM_BSP),true)
+    LOCAL_CFLAGS += -DQCOM_BSP
+endif
+
+ifeq ($(BOARD_HAVE_PIXEL_FORMAT_INFO),true)
+LOCAL_CFLAGS += -DHAVE_PIXEL_FORMAT_INFO
 endif
 
 LOCAL_MODULE:= libui
