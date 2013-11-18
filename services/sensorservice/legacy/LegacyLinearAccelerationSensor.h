@@ -14,59 +14,40 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_SENSOR_INTERFACE_H
-#define ANDROID_SENSOR_INTERFACE_H
+#ifndef ANDROID_LEGACY_LINEAR_ACCELERATION_SENSOR_H
+#define ANDROID_LEGACY_LINEAR_ACCELERATION_SENSOR_H
 
 #include <stdint.h>
 #include <sys/types.h>
 
 #include <gui/Sensor.h>
 
-#include "SensorDevice.h"
+#include "../SensorInterface.h"
+#include "LegacyGravitySensor.h"
 
 // ---------------------------------------------------------------------------
-
 namespace android {
 // ---------------------------------------------------------------------------
 
-class SensorInterface {
-public:
-    virtual ~SensorInterface();
+class SensorDevice;
+class SensorFusion;
 
-    virtual bool process(sensors_event_t* outEvent,
-            const sensors_event_t& event) = 0;
-
-    virtual status_t activate(void* ident, bool enabled) = 0;
-    virtual status_t setDelay(void* ident, int handle, int64_t ns) = 0;
-    virtual Sensor getSensor() const = 0;
-    virtual bool isVirtual() const = 0;
-    virtual void autoDisable(void *ident, int handle) { }
-};
-
-// ---------------------------------------------------------------------------
-
-class HardwareSensor : public SensorInterface
-{
+class LegacyLinearAccelerationSensor : public SensorInterface {
     SensorDevice& mSensorDevice;
-    Sensor mSensor;
-
-public:
-    HardwareSensor(const sensor_t& sensor);
-
-    virtual ~HardwareSensor();
+    LegacyGravitySensor mGravitySensor;
+    float mData[3];
 
     virtual bool process(sensors_event_t* outEvent,
             const sensors_event_t& event);
-
+public:
+    LegacyLinearAccelerationSensor(sensor_t const* list, size_t count);
     virtual status_t activate(void* ident, bool enabled);
     virtual status_t setDelay(void* ident, int handle, int64_t ns);
     virtual Sensor getSensor() const;
-    virtual bool isVirtual() const { return false; }
-    virtual void autoDisable(void *ident, int handle);
+    virtual bool isVirtual() const { return true; }
 };
-
 
 // ---------------------------------------------------------------------------
 }; // namespace android
 
-#endif // ANDROID_SENSOR_INTERFACE_H
+#endif // ANDROID_LEGACY_LINEAR_ACCELERATION_SENSOR_H

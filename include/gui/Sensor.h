@@ -53,7 +53,7 @@ public:
     };
 
             Sensor();
-            Sensor(struct sensor_t const* hwSensor, int halVersion = 0);
+            Sensor(struct sensor_t const* hwSensor);
             ~Sensor();
 
     const String8& getName() const;
@@ -67,8 +67,6 @@ public:
     int32_t getMinDelay() const;
     nsecs_t getMinDelayNs() const;
     int32_t getVersion() const;
-    int32_t getFifoReservedEventCount() const;
-    int32_t getFifoMaxEventCount() const;
 
     // LightFlattenable protocol
     inline bool isFixedSize() const { return false; }
@@ -87,8 +85,6 @@ private:
     float   mPower;
     int32_t mMinDelay;
     int32_t mVersion;
-    int32_t mFifoReservedEventCount;
-    int32_t mFifoMaxEventCount;
 };
 
 // ----------------------------------------------------------------------------
